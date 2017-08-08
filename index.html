@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Modular CSS Guidline</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,900" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="wrap">
+     
+      <h2>Introduction</h2>
+      <p>
+        MaintainableCSS is an approach to writing modular, scalable and maintainable CSS. Not only does this guide explain how to do this, but more importantly it explains why.
+      </p>
+      
+      <h4>What does maintainable mean?</h4>
+      <p>
+        Maintainable CSS can be defined as being able to make styling changes, without worrying about accidentally causing problems elsewhere.
+      </p>
+      
+      <h4>What does scalable mean?</h4>
+      <p>
+        Scalable CSS means that as CSS increases in size, it’s still easy to maintain. If you’ve ever inherited a large CSS codebase, and been afraid to make changes, you’ll sympathise with this.
+      </p>
+      
+      <h4>What does modular mean?</h4>
+      <p>
+        A module is a distinct, independent unit that can be combined with other modules to form a more complex structure. In a living room, we can consider the TV, the sofa and the wall art to be modules, all coming together to create a room.
+      </p>
+      <p>
+        If we take one of the units away, the others still work. We don’t need the TV to be able to sit on the sofa etc. In a website the header, registration form, shopping basket, article, product list, navigation and homepage promo can all be considered to be modules.
+      </p>
+
+     
+      <h2>R:01 Semantic markup and class</h2>
+      <p>
+        there are two type of css class. semantic and non-semantic. 
+      </p>
+      
+      <h4>Non-semantic</h4>
+      <p>Here are some non-semantic classes:</p>
+        <pre>
+        class="red pull-left"
+        class="grid row"
+        class="col-xs-4"
+        </pre>
+      <p>
+        Non-semantic classes don’t convey what an element represents. At best, they give us an idea of what an element looks like. Atomic, visual, behavioural and utility classes are all forms of non-semantic classes.
+      </p>
+      
+      <h4>Semantic class</h4>
+      <p>Here are some semantic classes:</p>
+      <pre>
+        class="basket"
+        class="product"
+        class="searchResults"
+      </pre>
+      <p>
+        Semantic classes are a corner stone of MaintainableCSS. Without them, everything else makes little sense. So name something based on what it is and everything else falls into place.
+      </p>
+      
+      <h2>R:02 Reuse</h2>
+      <p>
+        in CSS <strong>DRY</strong> keyword is often misinterpreted as the necessity to never repeat the exact same thing twice
+      </p>
+      <p>
+        Striving for DRY leads to over-thought and over-engineered code. In doing so we make maintenance harder, not easier. Instead of obsessing over styles, we should focus on reusing tangible modules. Something we’ll discuss in upcoming chapters
+      </p>
+      
+      <h2>R:03 IDs</h2>
+      <p>
+        Semantically speaking, we should use an ID when there is only one instance of a thing. And we should use a class when there are several.
+      </p>
+      <ul>
+        <li>to link labels to form fields;</li>
+        <li>to bind internal anchors to a hash fragment in the URL; and</li>
+        <li>to connect up variaous ARIA attributes to help screen reader users.</li>
+      </ul>
+      <p>
+        Use IDs whenever you need to enable particular behaviours for browsers and assistive technology. But avoid using them for styles.
+      </p>
+      
+      <h2>R:04 Conventions</h2>
+      <p>MaintainableCSS has the following convention:</p>
+      <pre>
+        &lt; module>[-&lt;component &gt;][-&lt;state &gt;] {}
+          /* Module container */
+          .searchResults {}
+
+          /* Component */
+          .searchResults-heading {}
+
+          /* State */
+          .searchResults-isLoading {}
+
+          /* Module container */
+          .btn {}
+          
+          /* State */
+          .btn-active{}
+          .btn-success{}
+      </pre>
+      <ul>
+      <li>component and state are both delimitted by a dash</li>
+      <li>names are written with lowerCamelCase</li>
+      <li>selectors are prefixed with the module name</li>
+    </ul>
+     <h2>R:05 Modules and component?</h2>
+     <h4>What Modules ?</h4>
+     <p>
+      A module is a distinct, independent unit, that can be combined with other modules to form a more complex structure.
+     </p>
+     <p>
+       In a living room, we can consider the TV, the sofa and the wall art modules. All coming together to create a useable room.
+     </p>
+     <p>
+       In a website the header, registration form, shopping basket, article, product list, navigation and homepage promo can all be considered to be modules.
+     </p>
+     <h4>What’s a component?</h4>
+     <p>
+       A module is made up of components. Without the components, the module is incomplete or broken.
+     </p>
+     <p>
+        For example a sofa is made up of the frame, upholstery, legs, cushions and back pillows, all of which are required components to allow the sofa to function as designed.
+     </p>
+     <h4>Modules vs components</h4>
+     <p>
+       Sometimes it’s hard to decide whether something should be a component or a module. For example, we might have a header containing a logo and a menu. Are these components or modules?
+     </p>
+     <p>
+        In a recent project it made most sense for the logo to be a component and the menu to be a module of its own. What’s a header without logo? And the navigation might be moved below the header.
+     </p>
+       <h4>Example of Module</h4>
+      <pre class="highlight">
+ <code>&lt;div class="basket"&gt;
+  &lt;h1 class="basket-title"&gt;Your basket&lt;/h1&gt;
+  &lt;div class="basket-item"&gt;
+    &lt;h3 class="basket-productTitle"&gt;Product title&lt;/h3&gt;
+    &lt;form&gt;
+      &lt;input type="submit" class="basket-removeButton" value="Remove"&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code>
+       </pre>
+       <p>And CSS</p>
+        <pre>
+<code>.basket {}
+.basket-title {}
+.basket-item {}
+.basket-productTitle {}
+.basket-removeButton {}
+</code>
+        </pre>
+<h4>Working woth same duplication module </h4>
+ <p>
+   Next, we will build an order summary module. This module is shown during checkout and bears some resemblance to the basket. For example, it has a title and it displays a list of products.
+ </p>
+ <p>
+   The first thing to address is the temptation to reuse the basket template (and CSS). Even though there are similarities, this does not mean they are the same.
+ </p>
+ <p>
+   to avoid this problem we can create a separate modules
+ </p>
+<pre class="highlight"><code>&lt;div class="basket"&gt;
+  &lt;h1 class="basket-title"&gt;Your basket&lt;/h1&gt;
+  &lt;div class="basket-item"&gt;
+    &lt;h3 class="basket-productTitle"&gt;Product title&lt;/h3&gt;
+    &lt;form&gt;
+      &lt;input type="submit" class="basket-removeButton" value="Remove"&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>  
+ 
+  <h4>Working with share module</h4> 
+  <p>
+    Buttons are an example of something that we want to reuse in lot’s of places, and potentially within different modules. A button is not particularly useful on its own.
+  </p>
+  <p>
+    The problem is that different buttons often have slightly different positioning, sizing and spacing depending on context. And of course there is media queries to consider.
+  </p>
+  <p>
+    For example, within one module a button might be floated to the right next to some text. In another it might be centered with some text beneath with some bottom margin.
+  </p>
+  <p>
+    To avoid these problems, we can use a mixin or comma-delimit the common rules that aren’t affected by their context. For example:
+  </p>
+  <pre>
+    .basket-removeButton,
+    .another-loginButton,
+    .another-deleteButton {
+      background-color: green;
+      padding: 10px;
+      color: #fff;
+    }
+  </pre>
+  <h2>R:06 State</h2>
+  <p>
+    Quite often, particularly with richer user interfaces, styling needs to be applied in response to an element’s change of state. For example, we may have different styles when a module (or component) is:
+  </p>
+  <ul>
+  <li>showing or hiding;</li>
+  <li>active or inactive;</li>
+  <li>disabled or enabled;</li>
+  <li>loading or loaded;</li>
+  <li>hasProducts or hasNoProducts;</li>
+  <li>isEmpty or isFull;</li>
+</ul>
+  
+  <p>
+    To represent state we need an additional class which should be added to the module (or component) element to which it pertains. For example, if our basket module needs a gray background when it’s empty, the HTML should be:
+  </p>
+  <pre class="highlight"><code>&lt;div class="basket basket-isEmpty"&gt;
+</code></pre>
+  <p>
+    If an element’s style needs changing based on its state, we should add an extra class to apply the differences. When necessary, use ARIA attributes for assistive technologyy, not for styling. In doing so we employ a consistent and inclusive approach to styling.
+  </p>
+  
+  <h2>R:07 Modifiers</h2>
+  <p>
+    Like state, a modifier can also override styles. This is useful when modules (or components) have small and well understood differences.
+  </p>
+  <p>
+    Take an e-commerce site whereby each category has a unique background image in the header.
+  </p>
+  <p>
+    All headers have the same padding, and margin etc. The only difference is the background image. For example, the boys category would have a modifier as follows:  
+  </p>
+  <pre>
+    <code>&lt;div class="categoryHeader categoryHeader-boys"&gt;
+</code>
+  </pre>
+  
+  <h2>R:08 Versioning</h2>
+  <p>
+    We may, for example, want to A/B test two different versions of a module to see which works best. To do this, we need to duplicate the module and give it a unique name. For example, if we want to test two different baskets, the CSS might be as follows:
+  </p>
+  <pre>
+  /* existing module (variant A) */
+  .basket {}
+
+  .basket-title {}
+
+  /* new version (variant B) */
+  .basket2 {}
+
+  .basket2-title {}
+  </pre>
+  <H2>R:09 Structure Guideline</H2>
+  <h4>Syntax and Formatting</h4>
+  <ul>
+    <li>two (2) space indents, no tabs;</li>
+    <li>80 character wide columns;</li>
+    <li>multi-line CSS;</li>
+    <li>meaningful use of whitespace.</li>
+  </ul>
+  
+  <h4>Table of Contents</h4>
+  <p>
+    A simple table of contents will—in order, naturally—simply provide the name of the section and a brief summary of what it is and does, for example:
+  </p>
+  <pre>
+  /**
+   * CONTENTS
+   *
+   * SETTINGS
+   * Global...............Globally-available variables and config.
+   *
+   * TOOLS
+   * Mixins...............Useful mixins.
+   *
+   * GENERIC
+   * Normalize.css........A level playing field.
+   * Box-sizing...........Better default `box-sizing`.
+   *
+   * BASE
+   * Headings.............H1–H6 styles.
+   *
+   * OBJECTS
+   * Wrappers.............Wrapping and constraining elements.
+   *
+   * COMPONENTS
+   * Page-head............The main page header.
+   * Page-foot............The main page footer.
+   * Buttons..............Button elements.
+   *
+   * TRUMPS
+   * Text.................Text helpers.
+   */
+  </pre>
+  <h4>80 Characters Wide</h4>
+  <p>Where possible, limit CSS files’ width to 80 characters. Reasons for this include</p>
+  <ul>
+    <li>the ability to have multiple files open side by side;</li>
+    <li>viewing CSS on sites like GitHub, or in terminal windows;</li>
+    <li>providing a comfortable line length for comments.</li>
+  </ul>
+  
+    <H4>Titling</H4>
+    <p>Begin every new major section of a CSS project with a title:</p>
+    <pre>
+      /*------------------------------------*\
+      #SECTION-TITLE
+      \*------------------------------------*/
+
+      .selector { }
+    </pre>
+    <p>
+      The title of the section is prefixed with a hash (#) symbol to allow us to perform more targeted searches (e.g. grep, etc.): instead of searching for just SECTION-TITLE—which may yield many results—a more scoped search of #SECTION-TITLE should return only the section in question.
+    </p>
+    <p>
+      If you are working on a project where each section is its own file, this title should appear at the top of each one. If you are working on a project with multiple sections per file, each title should be preceded by five (5) carriage returns. This extra whitespace coupled with a title makes new sections much easier to spot when scrolling through large files:
+    </p>
+    <pre>
+      /*------------------------------------*\
+      #A-SECTION
+      \*------------------------------------*/
+
+      .selector { }
+
+
+
+
+
+      /*------------------------------------*\
+      #ANOTHER-SECTION
+      \*------------------------------------*/
+
+      /**
+      * Comment
+      */
+
+      .another-selector { }
+    </pre>
+    
+    <h4>Anatomy of a Ruleset</h4>
+    <pre>
+      [selector] {
+        [property]: [value];
+        [ &lt;--declaration---&gt;]
+      }
+    </pre>
+  <h4>Multi-line CSS</h4>   
+  <ul>
+    <li>A reduced chance of merge conflicts, because each piece of functionality exists on its own line.</li>
+    <li>More ‘truthful’ and reliable diffs, because one line only ever carries one change.</li>
+  </ul> 
+  <pre>
+  .icon--home     { background-position:   0     0  ; }
+  .icon--person   { background-position: -16px   0  ; }
+  .icon--files    { background-position:   0   -16px; }
+  .icon--settings { background-position: -16px -16px; }
+  </pre>
+  
+  <h4>Indenting</h4>
+  <p>
+    This quasi-replication of the DOM tells developers a lot about where classes are expected to be used without them having to refer to a snippet of HTML.
+  </p>
+  <pre>
+    .foo { }
+
+      .foo__bar { }
+
+        .foo__baz { }
+  </pre>
+  
+  <h4>Alignment</h4>
+  <p>
+    Attempt to align common and related identical strings in declarations, for example:
+  </p>
+  <pre>
+    .foo {
+      -webkit-border-radius: 3px;
+         -moz-border-radius: 3px;
+              border-radius: 3px;
+    }
+
+    .bar {
+      position: absolute;
+      top:    0;
+      right:  0;
+      bottom: 0;
+      left:   0;
+      margin-right: -10px;
+      margin-left:  -10px;
+      padding-right: 10px;
+      padding-left:  10px;
+    }
+  </pre>
+  <h4>Preprocessor Comments</h4>
+    <p>
+      With most—if not all—preprocessors, we have the option to write comments that will not get compiled out into our resulting CSS file. As a rule, use these comments to document code that would not get written out to that CSS file either. If you are documenting code which will get compiled, use comments that will compile also. For example, this is correct:
+    </p>
+    
+    <pre>
+// Dimensions of the @2x image sprite:
+$sprite-width:  920px;
+
+/**
+ * 1. Default icon size is 16px.
+ * 2. Squash down the retina sprite to display at the correct size.
+ */
+    </pre>
+    <h4>Hyphen Delimited</h4>
+    <p>Camel case and underscores are not used for regular standard classes; the following are incorrect:</p>
+    <h4>JavaScript Hooks</h4>
+    <p>
+As a rule, it is unwise to bind your CSS and your JS onto the same class in your HTML. This is because doing so means you can’t have (or remove) one without (removing) the other. It is much cleaner, much more transparent, and much more maintainable to bind your JS onto specific classes.
+    </p>
+    
+    <h4>CSS Selectors</h4>
+    <p>
+      Perhaps somewhat surprisingly, one of the most fundamental, critical aspects of writing maintainable and scalable CSS is selectors. Their specificity, their portability, and their reusability all have a direct impact on the mileage we will get out of our CSS, and the headaches it might bring us.
+    </p>
+    <p>
+      Poor Selector Intent is one of the biggest reasons for headaches on CSS projects. Writing rules that are far too greedy—and that apply very specific treatments via very far reaching selectors—causes unexpected side effects and leads to very tangled stylesheets, with selectors overstepping their intentions and impacting and interfering with otherwise unrelated rulesets.
+    </p>
+    <p><strong>your selectors should be as explicit and well reasoned as your reason for wanting to select something.</strong></p>
+    
+    <h4>Location Independence</h4>
+    <p>
+      our components’ styling should not be reliant upon where we place them—they should remain entirely location independent.
+    </p>
+    <p>
+      Let’s take an example of a call-to-action button that we have chosen to style via the following selector:
+    </p>
+    <pre>
+      .promo a { }
+    </pre>
+    <p>
+      Not only does this have poor Selector Intent—it will greedily style any and every link inside of a .promo to look like a button—it is also pretty wasteful as a result of being so locationally dependent: we can’t reuse that button with its correct styling outside of .promo because it is explicitly tied to that location. A far better selector would have been:
+      <strong>A component shouldn’t have to live in a certain place to look a certain way.</strong>
+    </p>
+    <p>
+      Better One
+    </p>
+    <pre>
+    .btn { }
+    </pre>
+    <h4>Naming</h4>
+    <p>
+      Phil Karlton once said, <i>There are only two hard things in Computer Science: cache invalidation and naming things.</i>
+    </p>
+    <p>
+      Tying your class name semantics tightly to the nature of the content has already reduced the ability of your architecture to scale or be easily put to use by other developers. <i>Using a class name to describe content is redundant because content describes itself.</i>
+    </p>
+    <p>
+      It is important to strike a balance between names that do not literally describe the style that the class brings, but also ones that do not explicitly describe specific use cases. Instead of
+      </p>
+       <pre>
+  .home-page-panel use  .masthead;
+  .site-nav, use .primary-nav;
+  .btn-login, use .btn-primary.
+       </pre>
+       <h2>Selector Performance</h2>
+       <p>
+         A topic which is—with the quality of today’s browsers—more interesting than it is important, is selector performance. That is to say, how quickly a browser can match the selectors your write in CSS up with the nodes it finds in the DOM.
+       </p>
+       <p>
+         Generally speaking, the longer a selector is (i.e. the more component parts) the slower it is, for example:
+       </p>
+       <p>
+         <strong> Very Bad</strong>
+       </p>
+       <pre>
+         body.home div.header ul { }
+       </pre>
+       <p>
+         Good One
+       </p>
+       <pre>
+         .primary-nav { }
+       </pre>
+       <p>
+         This is because browsers read CSS selectors <span class="highlighter-rouge">right-to-left.</span> A browser will read the first selector as
+       </p>
+      <ul>
+        <li>find all <code class="highlighter-rouge">ul</code> elements in the DOM;</li>
+        <li>now check if they live anywhere inside an element with a class of <code class="highlighter-rouge">.header</code>;</li>
+        <li>next check that <code class="highlighter-rouge">.header</code> class exists on a <code class="highlighter-rouge">div</code> element;</li>
+        <li>now check that that all lives anywhere inside any elements with a class of
+      <code class="highlighter-rouge">.home</code>;</li>
+        <li>finally, check that <code class="highlighter-rouge">.home</code> exists on a <code class="highlighter-rouge">body</code> element.</li>
+      </ul>
+      <h4>Effecient child selector</h4>
+      <p>
+        By using a child selector (e.g. .foo > .bar {}) we can make the process much more efficient, because this only requires the browser to look one level higher in the DOM, and it will stop regardless of whether or not it found a match.
+      </p>
+      <ul>
+  <li><strong>Select what you want explicitly</strong>, rather than relying on circumstance or
+coincidence. Good Selector Intent will rein in the reach and leak of your
+styles.</li>
+  <li><strong>Write selectors for reusability</strong>, so that you can work more efficiently and
+reduce waste and repetition.</li>
+  <li><strong>Do not nest selectors unnecessarily</strong>, because this will increase
+specificity and affect where else you can use your styles.</li>
+  <li><strong>Do not qualify selectors unnecessarily</strong>, as this will impact the number of
+different elements you can apply styles to.</li>
+  <li><strong>Keep selectors as short as possible</strong>, in order to keep specificity down and
+performance up.</li>
+</ul>
+ 
+ <h4>Nesting</h4>
+ <p>
+   We’ve already looked at how nesting can lead to location dependent and potentially inefficient code, but now it’s time to take a look at another of its pitfalls: it makes selectors more specific.
+ </p>
+ <p>
+   Whether you arrive at this CSS via a preprocessor or not isn’t particularly important, but it is worth noting that preprocessors tout this as a feature, where is actually to be avoided wherever possible.
+ </p>
+ <p>
+   <strong> if a selector will work without it being nested then do not nest it.</strong>
+ </p>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
